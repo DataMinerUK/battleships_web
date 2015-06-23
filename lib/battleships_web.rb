@@ -10,8 +10,8 @@ class BattleshipsWeb < Sinatra::Base
   end
 
   get '/start' do
-    @visitor = params[:name]
-    if @visitor
+    $visitor = params[:name]
+    if $visitor
       $game = Game.new Player, Board
       @board = $game.own_board_view $game.player_1
       erb :welcome
