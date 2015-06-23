@@ -1,1 +1,69 @@
-Place your ships, Admiral <%= $visitor %>
+<div>
+
+  <h2>Place your ships, Admiral <%= $visitor %></h2>
+
+
+
+    <form method="post">
+      <label for="ship_type">Select ship type</label>
+      <input name="ship_type" type="text" required></br></br>
+      <label for="coord">Select a coordinate</label>
+      <input name="coordinate" type="text" required></br></br>
+      <label for="orientation">Select the ship's orientation</label>
+      <input name="orientation" type="text" required></br></br>
+      <input type="submit" value="Place">
+    </form>
+
+
+
+    <!-- <form method="post">
+      <label for="ship_type">Select ship type</label>
+      <select name="ship_type" value="ship">
+        <option value="submarine">submarine</option>
+        <option value="destroyer">destroyer</option>
+        <option value="cruiser">cruiser</option>
+        <option value="battleship">battleship</option>
+        <option value="aircraft_carrier">aircraft carrier</option>
+      </select></br></br>
+      <label for="x_coord">Select letter for x coordinate</label>
+      <select name="x_coord" value="letter">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="E">E</option>
+        <option value="F">F</option>
+        <option value="G">G</option>
+        <option value="H">H</option>
+        <option value="I">I</option>
+        <option value="J">J</option>
+      </select></br></br>
+      <label for="y_coord">Select number for y coordinate</label>
+      <select name="y_coord" value="number">
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </select></br></br>
+      <label for="orientation">Select the ship's orientation</label>
+      <select name="orientation" value="orientation">
+        <option value="vertically">vertically</option>
+        <option value="horizontally">horizontally</option>
+      </select></br></br>
+
+      <input type="submit" value="Place">
+
+    </form> -->
+
+
+  <pre>
+  <%= @board %>
+  </pre>
+
+</div>

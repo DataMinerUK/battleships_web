@@ -10,9 +10,8 @@ feature 'placing ships' do
 
   scenario 'filling out a form to place ships' do
     visit '/place_ships'
-    fill_in 'ship', with: 'cruiser'
-    fill_in 'let', with: 'A'
-    fill_in 'num', with: '3'
+    fill_in 'ship_type', with: 'cruiser'
+    fill_in 'coordinate', with: 'A3'
     fill_in 'orientation', with: 'horizontally'
     click_button('Place')
     expect(page).to have_content '3|CCC'
