@@ -10,7 +10,11 @@ class BattleshipsWeb < Sinatra::Base
 
   get '/start' do
     @visitor = params[:name]
-    erb :start
+    if @visitor
+      erb :welcome
+    else
+       erb :start
+     end
   end
 
   run! if app_file == $0
