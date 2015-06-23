@@ -1,4 +1,5 @@
 require 'sinatra/base'
+require 'battleships'
 
 class BattleshipsWeb < Sinatra::Base
 
@@ -11,10 +12,12 @@ class BattleshipsWeb < Sinatra::Base
   get '/start' do
     @visitor = params[:name]
     if @visitor
+      $game = Game.new Player, Board
+      @board = $game.own_board_view $game.player_1
       erb :welcome
     else
-       erb :start
-     end
+      erb :start
+    end
   end
 
   run! if app_file == $0
