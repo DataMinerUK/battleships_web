@@ -1,32 +1,24 @@
 
-
-<!DOCTYPE html>
-<html>
-<head>
-    <title></title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-    <header class="box">
+    <header>
         <h3> Let's start the battle </h3>
     </header>
 
 
-<div class="main clearfix">
+<div>
 
-    <section class="sectionL box">
-        <h1>section L</h1>
+    <section style="float: left">
+        <h1>Your board</h1>
+          <pre>
+<%= @board %>
+          </pre>
     </section>
 
-    <section class="sectionR box">
-        <h1>section R</h1>
+    <section style="float: right">
+        <h1>Opponent board</h1>
     </section>
 
 </div>
 
-<footer class="box clearfix">
-        <h1>footer</h1>
-</footer>
 
 
 

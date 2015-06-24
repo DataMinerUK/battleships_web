@@ -42,6 +42,7 @@ class BattleshipsWeb < Sinatra::Base
   end
 
   get '/battle' do
+    @board = $game.own_board_view $game.player_1
     erb :battle
   end
 
