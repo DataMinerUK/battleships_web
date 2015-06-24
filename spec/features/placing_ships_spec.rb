@@ -18,6 +18,14 @@ feature 'placing ships' do
     expect(page).to have_content '3|CCC'
   end
 
-
+  scenario 'you cannot choose the same ship more than once' do
+    visit '/place_ships'
+    select 'cruiser', from: 'ship_type'
+    select 'A', from: 'x_coord'
+    select 1, from: 'y_coord'
+    select 'horizontally', from: 'orientation'
+    click_button('Place')
+    expect(page).to_not have_content 'cruiser'
+  end
 
 end

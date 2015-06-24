@@ -5,12 +5,12 @@
 
     <form method="POST">
       <label for="ship_type">Select ship type</label>
-      <select name="ship_type" value="ship">
-        <option value="submarine">submarine</option>
-        <option value="destroyer">destroyer</option>
-        <option value="cruiser">cruiser</option>
-        <option value="battleship">battleship</option>
-        <option value="aircraft_carrier">aircraft carrier</option>
+      <select id="ship_type" name="ship_type" value="ship">
+        
+        <% @ships.each do |ship| %>
+         <option value='<%= ship %>'><%= ship %></option>
+        <% end %>
+
       </select></br></br>
       <label for="coordinates">Select coordinates</label>
       <select name="x_coord" value="letter">
