@@ -1,3 +1,53 @@
-body {
-  background-color: red;
+
+/* Box Model Hack */
+* {
+     -moz-box-sizing: border-box; /* Firexfox */
+     -webkit-box-sizing: border-box; /* Safari/Chrome/iOS/Android */
+     box-sizing: border-box; /* IE */
 }
+
+/* Clear fix hack */
+.clearfix:after {
+     content: ".";
+     display: block;
+     clear: both;
+     visibility: hidden;
+     line-height: 0;
+     height: 0;
+}
+
+/* general width of all the website*/
+.general-width {
+  width: 80%;
+  margin: auto;
+}
+
+
+body {
+  background-color: #02fff9;
+}
+
+body {
+  font-family: 'Oswald', sans-serif;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+h2 {
+  font-size: 2em;
+}
+
+#shootForm {
+  position: absolute;
+  left: 450px;
+  top: 200px;
+  float: left;
+}
+
+
+
+
+
+
