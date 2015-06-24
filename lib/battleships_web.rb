@@ -55,6 +55,34 @@ class BattleshipsWeb < Sinatra::Base
     erb :battle
   end
 
+  post '/battle' do
+    all_coords = (('A'..'J').to_a).product((1..10).to_a).map{|letter, num| letter + num.to_s}
+    computer_shot = all_coords.sample
+    @shot = (params[:x_coord] + params[:y_coord].to_s).to_sym
+    @result_of_your_shot = $game.player_1.shoot @shot
+
+    if @result_of_your_shot == :miss
+      @to_tell = "Your shot missed. Try again"
+    elsif @result_of_your_shot == :hit
+      @to_tell = "You hit a ship!"
+    else
+      @to_tell = "You just sunk a ship!"
+    end
+
+    @result_of_computer_shot = $game.player_2.shoot computer_shot.to_sym
+
+    if @result_of_computer_shot == :miss
+      @to_know = "Your opponent missed"
+    elsif @result_of_computer_shot == :hit
+      @to_know = "Your opponent just hit one of your ships"
+    else
+      @to_know = "Your opponent just sunk one of your ships!"
+    end
+
+    @opponent_board = $game.opponent_board_view $game.player_1
+    @board = $game.own_board_view $game.player_1
+    erb :battle
+  end
 
 
   run! if app_file == $0

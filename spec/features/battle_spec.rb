@@ -2,6 +2,7 @@ require 'spec_helper'
 
 feature 'in battle' do
 
+
   scenario 'after placing ships we begin' do
     visit '/start'
     fill_in 'name', with: 'Kirsten'
@@ -40,20 +41,6 @@ feature 'in battle' do
 
     expect(page).to have_content "Fire at your opponent's board"
   end
-
-   scenario 'shoot at the opponent board' do
-    visit '/start'
-    fill_in 'name', with: 'Kirsten'
-    click_button('Submit')
-    click_button('Place ships')
-
-    visit '/battle'
-    select 'D', from: 'x_coord'
-    select 1, from: 'y_coord'
-    click_button('Fire!')
-    expect(page).to have_content('Your shot')
-  end
-
 
 
 
