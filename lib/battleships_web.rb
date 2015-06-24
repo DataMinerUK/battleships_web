@@ -33,10 +33,16 @@ class BattleshipsWeb < Sinatra::Base
                   "battleship"=> Ship.battleship,
                   "aircraft carrier"=> Ship.aircraft_carrier}
     @ship_type = params[:ship_type]
-    $ships.delete(@ship_type)
     @coordinate = (params[:x_coord] + params[:y_coord].to_s).to_sym
     @orienation = params[:orientation].to_sym
-    $game.player_1.place_ship ships_hash[@ship_type], @coordinate, @orienation
+
+    begin
+      $game.player_1.place_ship ships_hash[@ship_type], @coordinate, @orienation
+      $ships.delete(@ship_type)
+    rescue RuntimeError => e
+      @error = e
+    end
+
     @board = $game.own_board_view $game.player_1
     if $ships.empty?
       redirect '/battle'
