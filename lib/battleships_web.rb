@@ -26,7 +26,7 @@ class BattleshipsWeb < Sinatra::Base
   end
 
   post '/place_ships' do
-    # $ships = ["cruiser", "submarine", "destroyer", "battleship", "aircraft carrier"]
+
     ships_hash = {"cruiser" => Ship.cruiser,
                   "submarine"=> Ship.submarine,
                   "destroyer"=> Ship.destroyer,
@@ -52,11 +52,8 @@ class BattleshipsWeb < Sinatra::Base
 
   get '/battle' do
     @board = $game.own_board_view $game.player_1
-    $game.player_2.place_ship Ship.cruiser, :C4, :vertically
-    $game.player_2.place_ship Ship.submarine, :H2, :horizontally
-    $game.player_2.place_ship Ship.destroyer, :D9, :horizontally
-    $game.player_2.place_ship Ship.battleship, :J5, :vertically
-    $game.player_2.place_ship Ship.aircraft_carrier, :A1, :horizontally
+    placements = random_board_placements
+    random_board_placements.each { |ship| $game.player_2.place_ship ship[0],ship[1],ship[2] }
     @opponent_board = $game.opponent_board_view $game.player_1
     $all_coords = (('A'..'J').to_a).product((1..10).to_a).map{|letter, num| letter + num.to_s}
     erb :battle
@@ -109,6 +106,56 @@ class BattleshipsWeb < Sinatra::Base
   get '/game_over' do
     @message = $game.player_1.winner? ? "You won! :)" : "You lost :("
     erb :game_over
+  end
+
+  def random_board_placements
+
+    coords = (('A'..'J').to_a).product((1..10).to_a).map{|letter, num| letter + num.to_s}
+
+    ships = {
+          submarine: [Ship.submarine,1],
+          destroyer: [Ship.destroyer,2],
+          cruiser: [Ship.cruiser,3],
+          battleship: [Ship.battleship,4],
+          aircraft_carrier: [Ship.aircraft_carrier,5]
+        }
+
+    board = []
+
+
+    while !ships.empty?
+      ships.each do |ship_type, ship_info|
+
+        ship_size = ship_info[1]
+        starting_point = coords.sample
+        orientation = [:horizontally, :vertically].sample
+        try_position = create_position(starting_point, ship_size, orientation)
+
+        if coords & try_position == try_position
+          board << [ship_info[0], starting_point.to_sym, orientation]
+          coords = coords - try_position
+          ships.delete(ship_type)
+        end
+
+      end
+    end
+    board
+  end
+
+
+  def create_position starting_point, size, orientation
+    positions_array = []
+    letter, number = split_coordinate(starting_point)
+    to_change = (orientation == :horizontally) ? letter : number
+    size.times do
+      positions_array << letter + number
+      to_change.next!
+    end
+    positions_array
+  end
+
+  def split_coordinate starting_point
+    [starting_point.scan(/[A-Z]/).join, starting_point.scan(/[0-9]/).join]
   end
 
 
