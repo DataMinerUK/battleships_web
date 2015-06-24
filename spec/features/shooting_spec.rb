@@ -2,7 +2,7 @@ require 'launchy'
 
 feature 'shotting at board' do
 
-  scenario 'shoot at the opponent board' do
+  skip 'shoot at the opponent board' do
    visit '/start'
    fill_in 'name', with: 'Kirsten'
    click_button('Submit')

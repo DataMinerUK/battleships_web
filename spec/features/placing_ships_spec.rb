@@ -28,4 +28,24 @@ feature 'placing ships' do
     expect(page).to_not have_content 'cruiser'
   end
 
+  scenario "you can't place a ship on top of another ship" do
+    visit '/place_ships'
+
+    select 'cruiser', from: 'ship_type'
+    select 'A', from: 'x_coord'
+    select 1, from: 'y_coord'
+    select 'horizontally', from: 'orientation'
+    click_button('Place')
+
+    select 'cruiser', from: 'ship_type'
+    select 'A', from: 'x_coord'
+    select 1, from: 'y_coord'
+    select 'horizontally', from: 'orientation'
+    click_button('Place')
+
+
+    expect(page).to have_content 'Coordinate already occupied'
+
+  end
+
 end
