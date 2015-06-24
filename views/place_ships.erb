@@ -3,20 +3,7 @@
   <h2>Place your ships, Admiral <%= $visitor %></h2>
 
 
-
-    <form method="post">
-      <label for="ship_type">Select ship type</label>
-      <input name="ship_type" type="text" required></br></br>
-      <label for="coord">Select a coordinate</label>
-      <input name="coordinate" type="text" required></br></br>
-      <label for="orientation">Select the ship's orientation</label>
-      <input name="orientation" type="text" required></br></br>
-      <input type="submit" value="Place">
-    </form>
-
-
-
-    <!-- <form method="post">
+    <form method="POST">
       <label for="ship_type">Select ship type</label>
       <select name="ship_type" value="ship">
         <option value="submarine">submarine</option>
@@ -25,7 +12,7 @@
         <option value="battleship">battleship</option>
         <option value="aircraft_carrier">aircraft carrier</option>
       </select></br></br>
-      <label for="x_coord">Select letter for x coordinate</label>
+      <label for="coordinates">Select coordinates</label>
       <select name="x_coord" value="letter">
         <option value="A">A</option>
         <option value="B">B</option>
@@ -37,8 +24,7 @@
         <option value="H">H</option>
         <option value="I">I</option>
         <option value="J">J</option>
-      </select></br></br>
-      <label for="y_coord">Select number for y coordinate</label>
+      </select>
       <select name="y_coord" value="number">
         <option value="1">1</option>
         <option value="2">2</option>
@@ -59,7 +45,7 @@
 
       <input type="submit" value="Place">
 
-    </form> -->
+    </form>
 
 
   <pre>

@@ -31,7 +31,7 @@ class BattleshipsWeb < Sinatra::Base
                   "battleship"=> Ship.battleship,
                   "aircraft_carrier"=> Ship.aircraft_carrier}
     @ship_type = params[:ship_type]
-    @coordinate = params[:coordinate].to_sym
+    @coordinate = (params[:x_coord] + params[:y_coord].to_s).to_sym
     @orienation = params[:orientation].to_sym
     $game.player_1.place_ship ships_hash[@ship_type], @coordinate, @orienation
     @board = $game.own_board_view $game.player_1
