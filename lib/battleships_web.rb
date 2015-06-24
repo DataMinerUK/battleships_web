@@ -98,7 +98,17 @@ class BattleshipsWeb < Sinatra::Base
 
     @opponent_board = $game.opponent_board_view $game.player_1
     @board = $game.own_board_view $game.player_1
+
+    if $game.has_winner?
+      redirect '/game_over'
+    end
+
     erb :battle
+  end
+
+  get '/game_over' do
+    @message = $game.player_1.winner? ? "You won! :)" : "You lost :("
+    erb :game_over
   end
 
 

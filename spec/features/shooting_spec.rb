@@ -1,4 +1,5 @@
 require 'launchy'
+require 'spec_helper'
 
 feature 'shotting at board' do
 
