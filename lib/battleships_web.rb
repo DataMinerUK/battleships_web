@@ -41,6 +41,10 @@ class BattleshipsWeb < Sinatra::Base
     erb :place_ships
   end
 
+  get '/battle' do
+    erb :battle
+  end
+
 
 
   run! if app_file == $0

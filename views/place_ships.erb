@@ -6,7 +6,7 @@
     <form method="POST">
       <label for="ship_type">Select ship type</label>
       <select id="ship_type" name="ship_type" value="ship">
-        
+
         <% @ships.each do |ship| %>
          <option value='<%= ship %>'><%= ship %></option>
         <% end %>
@@ -44,6 +44,11 @@
       </select></br></br>
 
       <input type="submit" value="Place">
+
+    </form>
+
+    <form action="/battle">
+    <input type="submit" value="Battle!">
 
     </form>
 
