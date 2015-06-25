@@ -34,8 +34,7 @@ class BattleshipsWeb < Sinatra::Base
     begin
       $game.player_1.place_ship Ship.send(ship_type), coordinate, orientation
       $ships.delete(ship_type)
-    rescue RuntimeError => e
-      @error = e
+    rescue RuntimeError => @error
     end
 
     @board = $game.own_board_view $game.player_1
@@ -82,8 +81,7 @@ class BattleshipsWeb < Sinatra::Base
         @to_know = "Your opponent just sunk one of your ships!"
       end
 
-    rescue RuntimeError => e
-      @do_not_shoot_two_times = e
+    rescue RuntimeError => @do_not_shoot_two_times
 
     end
 
