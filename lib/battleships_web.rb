@@ -3,6 +3,8 @@ require 'battleships'
 
 class BattleshipsWeb < Sinatra::Base
 
+  enable :sessions
+
   set :views, proc { File.join(root, '..', 'views') }
 
   get '/' do
@@ -47,16 +49,13 @@ class BattleshipsWeb < Sinatra::Base
 
   get '/battle' do
     @board = $game.own_board_view $game.player_1
-    placements = random_board_placements
-    random_board_placements.each { |ship| $game.player_2.place_ship ship[0],ship[1],ship[2] }
-    @opponent_board = $game.opponent_board_view $game.player_1
-    $all_coords = (('A'..'J').to_a).product((1..10).to_a).map{|letter, num| letter + num.to_s}
+    # @opponent_board = $game.opponent_board_view $game.player_1
+
     erb :battle
   end
 
   post '/battle' do
 
-    computer_shot = $all_coords.sample
     your_shot = params[:x_coord] + params[:y_coord]
 
     begin
@@ -64,15 +63,11 @@ class BattleshipsWeb < Sinatra::Base
       result_of_your_shot = $game.player_1.shoot your_shot.to_sym
       @to_tell = message_from_your_shot result_of_your_shot
 
-      result_of_computer_shot = $game.player_2.shoot computer_shot.to_sym
-      @to_know = message_from_computer_shot result_of_computer_shot
-      $all_coords.delete(computer_shot)
-
     rescue RuntimeError => @do_not_shoot_two_times
 
     end
 
-    @opponent_board = $game.opponent_board_view $game.player_1
+    # @opponent_board = $game.opponent_board_view $game.player_1
     @board = $game.own_board_view $game.player_1
 
     if $game.has_winner?
@@ -97,7 +92,7 @@ class BattleshipsWeb < Sinatra::Base
     end
   end
 
-  def message_from_computer_shot shot
+  def message_from_opponent_shot shot
     if shot == :miss
       "Your opponent missed"
     elsif shot == :hit
@@ -105,55 +100,6 @@ class BattleshipsWeb < Sinatra::Base
     else
       "Your opponent just sunk one of your ships!"
     end
-  end
-
-  def random_board_placements
-
-    coords = (('A'..'J').to_a).product((1..10).to_a).map{|letter, num| letter + num.to_s}
-
-    ships = [ [Ship.submarine,1],
-              [Ship.destroyer,2],
-              [Ship.cruiser,3],
-              [Ship.battleship,4],
-              [Ship.aircraft_carrier,5]
-            ]
-
-    board = []
-
-
-    while !ships.empty?
-      ships.each do |ship_info|
-
-        ship_size = ship_info[1]
-        starting_point = coords.sample
-        orientation = [:horizontally, :vertically].sample
-        try_position = create_position(starting_point, ship_size, orientation)
-
-        if coords & try_position == try_position
-          board << [ship_info[0], starting_point.to_sym, orientation]
-          coords = coords - try_position
-          ships.delete(ship_info)
-        end
-
-      end
-    end
-    board
-  end
-
-
-  def create_position starting_point, size, orientation
-    positions_array = []
-    letter, number = split_coordinate(starting_point)
-    to_change = (orientation == :horizontally) ? letter : number
-    size.times do
-      positions_array << letter + number
-      to_change.next!
-    end
-    positions_array
-  end
-
-  def split_coordinate starting_point
-    [starting_point.scan(/[A-Z]/).join, starting_point.scan(/[0-9]/).join]
   end
 
 
