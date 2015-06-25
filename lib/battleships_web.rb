@@ -92,7 +92,6 @@ class BattleshipsWeb < Sinatra::Base
 
     end
 
-
     @opponent_board = $game.opponent_board_view $game.player_1
     @board = $game.own_board_view $game.player_1
 
@@ -112,19 +111,18 @@ class BattleshipsWeb < Sinatra::Base
 
     coords = (('A'..'J').to_a).product((1..10).to_a).map{|letter, num| letter + num.to_s}
 
-    ships = {
-          submarine: [Ship.submarine,1],
-          destroyer: [Ship.destroyer,2],
-          cruiser: [Ship.cruiser,3],
-          battleship: [Ship.battleship,4],
-          aircraft_carrier: [Ship.aircraft_carrier,5]
-        }
+    ships = [ [Ship.submarine,1],
+              [Ship.destroyer,2],
+              [Ship.cruiser,3],
+              [Ship.battleship,4],
+              [Ship.aircraft_carrier,5]
+            ]
 
     board = []
 
 
     while !ships.empty?
-      ships.each do |ship_type, ship_info|
+      ships.each do |ship_info|
 
         ship_size = ship_info[1]
         starting_point = coords.sample
@@ -134,7 +132,7 @@ class BattleshipsWeb < Sinatra::Base
         if coords & try_position == try_position
           board << [ship_info[0], starting_point.to_sym, orientation]
           coords = coords - try_position
-          ships.delete(ship_type)
+          ships.delete(ship_info)
         end
 
       end
