@@ -32,13 +32,13 @@ class BattleshipsWeb < Sinatra::Base
                   "destroyer"=> Ship.destroyer,
                   "battleship"=> Ship.battleship,
                   "aircraft carrier"=> Ship.aircraft_carrier}
-    @ship_type = params[:ship_type]
-    @coordinate = (params[:x_coord] + params[:y_coord].to_s).to_sym
-    @orienation = params[:orientation].to_sym
+    ship_type = params[:ship_type]
+    coordinate = (params[:x_coord] + params[:y_coord].to_s).to_sym
+    orienation = params[:orientation].to_sym
 
     begin
-      $game.player_1.place_ship ships_hash[@ship_type], @coordinate, @orienation
-      $ships.delete(@ship_type)
+      $game.player_1.place_ship ships_hash[ship_type], coordinate, orienation
+      $ships.delete(ship_type)
     rescue RuntimeError => e
       @error = e
     end
@@ -63,25 +63,25 @@ class BattleshipsWeb < Sinatra::Base
 
     computer_shot = $all_coords.sample
     $all_coords.delete(computer_shot)
-    @shot = (params[:x_coord] + params[:y_coord].to_s).to_sym
+    shot = (params[:x_coord] + params[:y_coord].to_s).to_sym
 
     begin
 
-      @result_of_your_shot = $game.player_1.shoot @shot
+      result_of_your_shot = $game.player_1.shoot shot
 
-      if @result_of_your_shot == :miss
+      if result_of_your_shot == :miss
         @to_tell = "Your shot missed. Try again"
-      elsif @result_of_your_shot == :hit
+      elsif result_of_your_shot == :hit
         @to_tell = "You hit a ship!"
       else
         @to_tell = "You just sunk a ship!"
       end
 
-      @result_of_computer_shot = $game.player_2.shoot computer_shot.to_sym
+      result_of_computer_shot = $game.player_2.shoot computer_shot.to_sym
 
-      if @result_of_computer_shot == :miss
+      if result_of_computer_shot == :miss
         @to_know = "Your opponent missed"
-      elsif @result_of_computer_shot == :hit
+      elsif result_of_computer_shot == :hit
         @to_know = "Your opponent just hit one of your ships"
       else
         @to_know = "Your opponent just sunk one of your ships!"
