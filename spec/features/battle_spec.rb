@@ -33,7 +33,7 @@ feature 'in battle' do
     select 'vertically', from: 'orientation'
     click_button('Place')
 
-    select 'aircraft carrier', from: 'ship_type'
+    select 'aircraft_carrier', from: 'ship_type'
     select 'E', from: 'x_coord'
     select 1, from: 'y_coord'
     select 'vertically', from: 'orientation'
