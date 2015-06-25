@@ -43,9 +43,20 @@ feature 'placing ships' do
     select 'horizontally', from: 'orientation'
     click_button('Place')
 
-
     expect(page).to have_content 'Coordinate already occupied'
 
+  end
+
+  scenario "you cannot place a ship out of bounds" do
+    visit '/place_ships'
+
+    select 'cruiser', from: 'ship_type'
+    select 'J', from: 'x_coord'
+    select 10, from: 'y_coord'
+    select 'vertically', from: 'orientation'
+    click_button('Place')
+
+    expect(page).to have_content 'Out of bounds'
   end
 
 end
