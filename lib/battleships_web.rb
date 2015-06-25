@@ -38,6 +38,7 @@ class BattleshipsWeb < Sinatra::Base
     end
 
     @board = $game.own_board_view $game.player_1
+
     if $ships.empty?
       redirect '/battle'
     end
@@ -56,30 +57,16 @@ class BattleshipsWeb < Sinatra::Base
   post '/battle' do
 
     computer_shot = $all_coords.sample
-    $all_coords.delete(computer_shot)
     shot = (params[:x_coord] + params[:y_coord].to_s).to_sym
 
     begin
 
       result_of_your_shot = $game.player_1.shoot shot
-
-      if result_of_your_shot == :miss
-        @to_tell = "Your shot missed. Try again"
-      elsif result_of_your_shot == :hit
-        @to_tell = "You hit a ship!"
-      else
-        @to_tell = "You just sunk a ship!"
-      end
+      @to_tell = message_from_your_shot result_of_your_shot
 
       result_of_computer_shot = $game.player_2.shoot computer_shot.to_sym
-
-      if result_of_computer_shot == :miss
-        @to_know = "Your opponent missed"
-      elsif result_of_computer_shot == :hit
-        @to_know = "Your opponent just hit one of your ships"
-      else
-        @to_know = "Your opponent just sunk one of your ships!"
-      end
+      @to_know = message_from_computer_shot result_of_computer_shot
+      $all_coords.delete(computer_shot)
 
     rescue RuntimeError => @do_not_shoot_two_times
 
@@ -98,6 +85,26 @@ class BattleshipsWeb < Sinatra::Base
   get '/game_over' do
     @message = $game.player_1.winner? ? "You won! :)" : "You lost :("
     erb :game_over
+  end
+
+  def message_from_your_shot shot
+    if shot == :miss
+      "Your shot missed. Try again"
+    elsif shot == :hit
+      "You hit a ship!"
+    else
+      "You just sunk a ship!"
+    end
+  end
+
+  def message_from_computer_shot shot
+    if shot == :miss
+      "Your opponent missed"
+    elsif shot == :hit
+      "Your opponent just hit one of your ships"
+    else
+      "Your opponent just sunk one of your ships!"
+    end
   end
 
   def random_board_placements
