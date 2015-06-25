@@ -28,8 +28,8 @@ class BattleshipsWeb < Sinatra::Base
   post '/place_ships' do
 
     ship_type = params[:ship_type]
-    coordinate = (params[:x_coord] + params[:y_coord].to_s).to_sym
-    orientation = params[:orientation].to_sym
+    coordinate = (params[:x_coord] + params[:y_coord])
+    orientation = params[:orientation]
 
     begin
       $game.player_1.place_ship Ship.send(ship_type), coordinate, orientation
@@ -57,14 +57,14 @@ class BattleshipsWeb < Sinatra::Base
   post '/battle' do
 
     computer_shot = $all_coords.sample
-    shot = (params[:x_coord] + params[:y_coord].to_s).to_sym
+    shot = params[:x_coord] + params[:y_coord]
 
     begin
 
       result_of_your_shot = $game.player_1.shoot shot
       @to_tell = message_from_your_shot result_of_your_shot
 
-      result_of_computer_shot = $game.player_2.shoot computer_shot.to_sym
+      result_of_computer_shot = $game.player_2.shoot computer_shot
       @to_know = message_from_computer_shot result_of_computer_shot
       $all_coords.delete(computer_shot)
 
