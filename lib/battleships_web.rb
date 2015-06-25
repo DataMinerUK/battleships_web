@@ -57,14 +57,14 @@ class BattleshipsWeb < Sinatra::Base
   post '/battle' do
 
     computer_shot = $all_coords.sample
-    shot = params[:x_coord] + params[:y_coord]
+    your_shot = params[:x_coord] + params[:y_coord]
 
     begin
 
-      result_of_your_shot = $game.player_1.shoot shot
+      result_of_your_shot = $game.player_1.shoot your_shot.to_sym
       @to_tell = message_from_your_shot result_of_your_shot
 
-      result_of_computer_shot = $game.player_2.shoot computer_shot
+      result_of_computer_shot = $game.player_2.shoot computer_shot.to_sym
       @to_know = message_from_computer_shot result_of_computer_shot
       $all_coords.delete(computer_shot)
 
