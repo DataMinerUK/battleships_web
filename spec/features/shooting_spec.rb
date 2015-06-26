@@ -3,21 +3,22 @@ require 'spec_helper'
 
 feature 'shotting at board' do
 
-  skip 'shoot at the opponent board' do
+  scenario 'shoot at the opponent board' do
    visit '/start'
    fill_in 'name', with: 'Kirsten'
    click_button('Submit')
    click_button('Place ships')
 
+
    visit '/battle'
+  #  save_and_open_page
    select 'J', from: 'x_coord'
    select 10, from: 'y_coord'
    click_button('Fire!')
-   # save_and_open_page
    expect(page).to have_content('Your opponent')
  end
 
-   skip 'you cannot shoot at the same coordinate more than once' do
+   scenario 'you cannot shoot at the same coordinate more than once' do
       visit '/start'
       fill_in 'name', with: 'Kirsten'
       click_button('Submit')
@@ -25,15 +26,15 @@ feature 'shotting at board' do
       click_button('Place ships')
 
       visit '/battle'
-      # select 'J', from: 'x_coord'
-      # select 10, from: 'y_coord'
+      select 'J', from: 'x_coord'
+      select 10, from: 'y_coord'
       click_button('Fire!')
 
-      # select 'J', from: 'x_coord'
-      # select 10, from: 'y_coord'
+      select 'J', from: 'x_coord'
+      select 10, from: 'y_coord'
       click_button('Fire!')
 
-      expect(page).to have_content("You already shot there")
+      expect(page).to have_content("Coordinate has been shot already")
    end
 
 end
