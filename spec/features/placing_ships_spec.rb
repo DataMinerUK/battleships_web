@@ -5,7 +5,7 @@ feature 'placing ships' do
   scenario 'it has a button to place ships' do
     visit '/start?name=massi'
     click_button('Place ships')
-    expect(page).to have_content 'Place your ships, Admiral massi'
+    expect(page).to have_content 'Place your ships'
   end
 
   scenario 'filling out a form to place ships' do

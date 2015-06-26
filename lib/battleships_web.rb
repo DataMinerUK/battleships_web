@@ -14,6 +14,7 @@ class BattleshipsWeb < Sinatra::Base
   end
 
   get '/start' do
+
     @visitor = params[:name]
     if @visitor
       $game ||= Game.new Player, Board
@@ -23,6 +24,7 @@ class BattleshipsWeb < Sinatra::Base
     else
       erb :start
     end
+
   end
 
   get '/place_ships' do
@@ -44,6 +46,7 @@ class BattleshipsWeb < Sinatra::Base
     end
 
     @board = $game.own_board_view player_from_session
+    @who_am_i = session[:player]
 
     if $ships.empty?
       redirect '/battle'
@@ -93,12 +96,12 @@ class BattleshipsWeb < Sinatra::Base
     end
 
     def player_from_session
-      session[:player] == 'player_1' ? $game.player_1 : $game.player_2
+      session[:player] == 'player_2' ? $game.player_2 : $game.player_1
     end
 
     def message_from_your_shot shot
       if shot == :miss
-        "Your shot missed. Try again"
+        "You missed. Try again"
       elsif shot == :hit
         "You hit a ship!"
       else
