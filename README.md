@@ -56,9 +56,13 @@ and point the browser to your application ( _[http://localhost:4567](http://loca
 
 - Chrome incognito windows share cookies so run the two player game in two different browsers.
 - In order for the controller to know where the views are, under the controller class we have:
-`set :views, proc { File.join(root, '..', 'views') }`
+```
+set :views, proc { File.join(root, '..', 'views') }
+```
 - To use Sinatra session cookies, in the controller we have to:
-`enable :sessions`
+```
+enable :sessions
+```
 - To use apply CSS, in the controller we have:
 ```
 enable :static
